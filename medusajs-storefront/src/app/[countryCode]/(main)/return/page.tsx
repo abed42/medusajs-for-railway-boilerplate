@@ -28,7 +28,7 @@ export default async function CheckoutReturn({  searchParams }: { searchParams: 
   if (session?.status === "complete") {
     return (
       <h3>
-        We appreciate your business Your Stripe customer ID is:
+        We appreciate doing business with you, Your Stripe customer ID is:
         {(session.customer as string)}.
       </h3>
     );
