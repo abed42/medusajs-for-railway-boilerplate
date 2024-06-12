@@ -46,13 +46,14 @@ export default async function Nav() {
                 Account
               </LocalizedClientLink>
             </div>
+            <div>Credit : 0</div>
             <Suspense
               fallback={
                 <LocalizedClientLink
                   className="hover:text-ui-fg-base flex gap-2"
                   href="/cart"
                 >
-                  Cart (0)
+                  Cart
                 </LocalizedClientLink>
               }
             >
