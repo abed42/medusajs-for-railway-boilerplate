@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 const tiers = [
   {
-    name: 'Freelancer',
+    name: '50 Credits',
     id: 'tier-freelancer',
     href: '#',
     price: { monthly: '$15', annually: '$144' },
@@ -13,7 +13,7 @@ const tiers = [
     mostPopular: false,
   },
   {
-    name: 'Startup',
+    name: '100 Credits',
     id: 'tier-startup',
     href: '#',
     price: { monthly: '$30', annually: '$288' },
@@ -28,7 +28,7 @@ const tiers = [
     mostPopular: true,
   },
   {
-    name: 'Enterprise',
+    name: '300 Credits',
     id: 'tier-enterprise',
     href: '#',
     price: { monthly: '$60', annually: '$576' },
@@ -49,20 +49,19 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function CreditPricing() {
+export default function CreditPricing({ handler }: { handler: (...args: any[]) => void }) {
 
   return (
-    <div className="bg-white py-24 sm:py-32">
+    <div className="bg-white py-12 sm:py-22">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-base font-semibold leading-7 text-indigo-600">Pricing</h2>
+          {/* <h2 className="text-base font-semibold leading-7 text-indigo-600">Pricing</h2> */}
           <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-            Pricing plans for teams of&nbsp;all&nbsp;sizes
+            Buy Credits!
           </p>
         </div>
         <p className="mx-auto mt-6 mb-20 max-w-2xl text-center text-lg leading-8 text-gray-600">
-          Choose an affordable plan that’s packed with the best features for engaging your audience, creating customer
-          loyalty, and driving sales.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto sint odio amet reprehenderit velit magnam doloremque eos fugit
         </p>
 
         <div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -79,7 +78,7 @@ export default function CreditPricing() {
                   id={tier.id}
                   className={classNames(
                     tier.mostPopular ? 'text-indigo-600' : 'text-gray-900',
-                    'text-lg font-semibold leading-8'
+                    'text-2xl font-semibold leading-8 '
                   )}
                 >
                   {tier.name}
@@ -93,11 +92,11 @@ export default function CreditPricing() {
               <p className="mt-4 text-sm leading-6 text-gray-600">{tier.description}</p>
               <p className="mt-6 flex items-baseline gap-x-1">
                 {/* <span className="text-4xl font-bold tracking-tight text-gray-900">{tier.price[frequency.value]}</span> */}
-                <span className="text-4xl font-bold tracking-tight text-gray-900">50</span>
+                {/* <span className="text-4xl font-bold tracking-tight text-gray-900">50</span> */}
                 {/* <span className="text-sm font-semibold leading-6 text-gray-600">{frequency.priceSuffix}</span> */}
               </p>
-              <a
-                href={tier.href}
+              <button
+                onClick={handler}
                 aria-describedby={tier.id}
                 className={classNames(
                   tier.mostPopular
@@ -107,7 +106,7 @@ export default function CreditPricing() {
                 )}
               >
                 Buy Credits
-              </a>
+              </button>
               <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10">
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex gap-x-3">

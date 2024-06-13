@@ -5,6 +5,7 @@ import {
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
 import { useCallback, useRef, useState } from "react";
+import CreditPricing from "./cards";
 
 export default function EmbeddedCheckoutButton() {
   const stripePromise = loadStripe(
@@ -39,13 +40,11 @@ export default function EmbeddedCheckoutButton() {
   };
 
   return (
-    <div id="checkout" className="my-4">
-      <button className="btn" onClick={handleCheckoutClick}>
-        Open Modal with Embedded Checkout
-      </button>
-      <dialog ref={modalRef} className="modal">
+    <div id="checkout" className="my-4 ">
+      <CreditPricing handler={handleCheckoutClick} />
+      <dialog ref={modalRef} className="modal w-6/12 rounded-md">
         <div className="modal-box w-100 max-w-screen-2xl">
-          <h3 className="font-bold text-lg">Embedded Checkout</h3>
+          {/* <h3 className="font-bold text-lg">Embedded Checkout</h3> */}
           <div className="py-4">
             {showCheckout && (
               <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>

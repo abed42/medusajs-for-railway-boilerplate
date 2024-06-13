@@ -8,7 +8,7 @@ interface SearchParams {
   session_id?: string;
 }
 
-export default async function CheckoutReturn({  searchParams }: { searchParams: SearchParams }) {
+export default async function CheckoutReturn({ searchParams }: { searchParams: SearchParams }) {
   const sessionId = searchParams.session_id;
 
   if (!sessionId) {
@@ -27,10 +27,21 @@ export default async function CheckoutReturn({  searchParams }: { searchParams: 
 
   if (session?.status === "complete") {
     return (
-      <h3>
-        We appreciate doing business with you, Your Stripe customer ID is:
-        {(session.customer as string)}.
-      </h3>
+      <div className="text-center h-100">
+
+
+        <h3 className="text-4xl text-green-500 my-32">
+          Payment successful!
+        </h3>
+        <br />
+
+        <p className="text-3xl text-center my-20">
+        You now have <span className="font-bold text-blue-400 ">100</span> credits
+        </p>
+        {/* {(session.customer as string)}. */}
+
+
+      </div>
     );
   }
 

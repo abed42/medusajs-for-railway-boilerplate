@@ -47,7 +47,7 @@ export default async function Nav() {
                 Account
               </LocalizedClientLink>
             </div>
-            <div>Credit : 0</div>
+            {/* <div>Credit : 0</div> */}
             <Link href={"/credit"}>Buy Credits</Link>
             <Suspense
               fallback={
