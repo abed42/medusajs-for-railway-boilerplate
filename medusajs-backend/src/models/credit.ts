@@ -1,9 +1,23 @@
-import { BaseEntity } from "@medusajs/medusa";
-import { Column, Entity } from "typeorm";
+import { 
+    BeforeInsert, 
+    Column, 
+    Entity, 
+    PrimaryColumn,
+  } from "typeorm"
+  import { BaseEntity } from "@medusajs/medusa"
+  import { generateEntityId } from "@medusajs/medusa/dist/utils"
+  
+  @Entity()
+  export class Credit extends BaseEntity {
+    @Column({ type: "string" })
+    userId: string
 
-@Entity()
-export class Credit extends BaseEntity {
-    @Column({ type: "int" })
-    amount: number; // Represents the current balance of credits
-
-}
+    @Column({ type: "number" })
+    credit: number
+  
+    @BeforeInsert()
+    private beforeInsert(): void {
+      this.id = generateEntityId(this.id, "credit")
+    }
+  }
+  

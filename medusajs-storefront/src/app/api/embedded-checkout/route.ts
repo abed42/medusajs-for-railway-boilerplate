@@ -1,3 +1,4 @@
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 import { NextResponse } from 'next/server';
 

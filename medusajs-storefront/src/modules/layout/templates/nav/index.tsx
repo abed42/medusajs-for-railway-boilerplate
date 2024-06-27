@@ -1,13 +1,14 @@
 import { headers } from "next/headers"
 import { Suspense } from "react"
 
-import { listRegions } from "@lib/data"
+import { listRegions, getCredit } from "@lib/data"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 import Link from "next/link"
 
 export default async function Nav() {
+  const credit = await getCredit().then((credit) => credit)
   const regions = await listRegions().then((regions) => regions)
 
   return (
@@ -47,8 +48,9 @@ export default async function Nav() {
                 Account
               </LocalizedClientLink>
             </div>
-            {/* <div>Credit : 0</div> */}
-            <Link href={"/credit"}>Buy Credits</Link>
+            <Link href={"/credit"}>
+              Credits {credit? JSON.stringify(credit) : 'Loading...'}
+            </Link>
             <Suspense
               fallback={
                 <LocalizedClientLink

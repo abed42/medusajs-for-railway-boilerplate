@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { getCustomer } from '@lib/data';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2024-04-10',
@@ -8,7 +9,21 @@ const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
 
 const fulfillOrder = async (): Promise<boolean> => {
   console.log("BAAAAAMMMM 💥💥💥💥💥💥💥💥💥 fulfilling order");
-  return true;
+
+  const customer = await getCustomer();
+  if (!customer) return false;
+
+  await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/credit`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        id: customer.id,
+        credit: 100
+    }),
+  });
+return true;
 }
 const handleCompletedCheckoutSession = async (event: Stripe.CheckoutSessionCompletedEvent) => {
   try {

@@ -5756,10 +5756,10 @@ medusa-core-utils@^1.2.0:
   resolved "https://registry.npmjs.org/medusa-core-utils/-/medusa-core-utils-1.2.0.tgz"
   integrity sha512-9mzXGkMsll92C46Ub8A9vwjcfFiHfdkgshwmPP9QpRrm02M6N+SQb45S2A9t0dKjyT9J7rgCCSrFhYQg3pvqbw==
 
-medusa-react@^9.0.0:
-  version "9.0.5"
-  resolved "https://registry.npmjs.org/medusa-react/-/medusa-react-9.0.5.tgz"
-  integrity sha512-O5oJEfTQn7ysky1Zoxctm4nc7xVx8hAHqCzKI6g6KaJpLTaBSKq66pKQvRwMEkU3ao9Um+/CP0QVwwNWyh/skw==
+medusa-react@^9.0.17:
+  version "9.0.17"
+  resolved "https://registry.yarnpkg.com/medusa-react/-/medusa-react-9.0.17.tgz#b66b1151d6e5fce6c362e1a2a9514505d6d652e7"
+  integrity sha512-oBDHm3xE0EcKQPflpdQyxJciu0LwmOM1Z+Z2Lw8MFsaNIpSYE+YKxBICcXRh+6C/YElXPsUebDWzrNHN8q81kQ==
   dependencies:
     "@medusajs/medusa-js" "*"
 
