@@ -10,7 +10,7 @@ import Link from "next/link"
 export default async function Nav() {
   const credit = await getCredit().then((credit) => credit)
   const regions = await listRegions().then((regions) => regions)
-
+console.log(credit, "credit log here")
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
       <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">

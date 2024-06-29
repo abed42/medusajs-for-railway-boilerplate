@@ -1,4 +1,4 @@
-import  CustomerService  from "../../../services/customer";
+import  CreditService  from "../../../services/credit";
 
 interface CreditTopUpRequestBody {
   userId: string;
@@ -12,10 +12,10 @@ import type { MedusaRequest, MedusaResponse } from "@medusajs/medusa";
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
 
-  const customerService: CustomerService = req.scope.resolve("customerService");
+  const creditService: CreditService = req.scope.resolve("creditService");
   try {
 
-  const customer = await customerService.retrieve((req.body as RequestBody).id)
+  const customer = await creditService.retrieve((req.body as RequestBody).id)
     console.log(customer, "customer log here");
     res.json({
       customer
@@ -29,10 +29,10 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
 }
 export async function PUT(req: MedusaRequest<{credit: number, id: string}>, res: MedusaResponse) {
   
-  const customerService: CustomerService = req.scope.resolve("customerService");
+  const creditService: CreditService = req.scope.resolve("creditService");
   try {
 
-  const customer = await customerService.update({credid: req.body.credit, id :req.body.id})
+  const customer = await creditService.update({credid: req.body.credit, id :req.body.id})
     console.log(customer, "customer log here");
     res.json({
       customer
@@ -49,7 +49,7 @@ export async function PUT(req: MedusaRequest<{credit: number, id: string}>, res:
 
 //   // Validate input (not shown)
 
-//   const customerService: CustomerService = req.scope.resolve("customerService");
+//   const customerService: CreditService = req.scope.resolve("customerService");
 
 //   try {
 //     await customerService.updateCredit(userId, amount);

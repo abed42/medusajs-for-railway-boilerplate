@@ -50,6 +50,7 @@ const getMedusaHeaders = (tags: string[] = []) => {
 
   return headers
 }
+
 // Credit actions
 export async function getCredit() {
   const headers = getMedusaHeaders(["customer"])
@@ -58,6 +59,7 @@ export async function getCredit() {
     .then(({ customer }) => customer)
     .catch((err) => null)
 }
+
 // Cart actions
 export async function createCart(data = {}) {
   const headers = getMedusaHeaders(["cart"])
@@ -257,7 +259,7 @@ export async function getToken(credentials: StorePostAuthReq) {
       return access_token
     })
     .catch((err) => {
-      throw new Error("Wrong email or password bla bla.")
+      throw new Error("Wrong email or password.")
     })
 }
 

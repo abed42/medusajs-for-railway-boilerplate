@@ -1,5 +1,5 @@
-export declare module "@medusajs/medusa/dist/models/customer" {
-    declare interface Customer {
+export declare module "@medusajs/medusa/dist/models/credit" {
+    declare interface Credit {
         credit: number;
     }
   }
