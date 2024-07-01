@@ -1,5 +1,5 @@
 import stripe from "config/stripe";
-import { getCustomer } from '@lib/data';
+import { getCredit } from '@lib/data';
 
 async function getSession(sessionId: string) {
   const session = await stripe.checkout.sessions.retrieve(sessionId!);
@@ -14,38 +14,20 @@ export default async function CheckoutReturn({ searchParams }: { searchParams: S
 
   if (!sessionId) {
     console.error("Session ID is undefined.");
-    // Handle the case where sessionId is undefined, e.g., return an error message or a loading indicator
-    return <p>Loading...</p>; // Or any other appropriate response
+    return <p>Loading...</p>;
   }
 
   const session = await getSession(sessionId);
-
-  console.log(session);
-  const fulfillOrder = async (): Promise<boolean> => {
-    console.log("BAAAAAMMMM 💥💥💥💥💥💥💥💥💥 fulfilling order");
+  const fetchData = async () => {
+    return await getCredit();
+    }
+  const credit = await fetchData();
   
-    const customer = await getCustomer();
-    if (!customer) return false;
-  
-    await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/credit`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-          id: customer.id,
-          credit: 100
-      }),
-    });
-  return true;
-  }
   if (session?.status === "open") {
     return <p>Payment did not work.</p>;
   }
 
   if (session?.status === "complete") {
-    fulfillOrder();
-
     return (
       <div className="text-center h-100">
 
@@ -56,11 +38,8 @@ export default async function CheckoutReturn({ searchParams }: { searchParams: S
         <br />
 
         <p className="text-3xl text-center my-20">
-        You now have <span className="font-bold text-blue-400 ">100</span> credits
+        You now have <span className="font-bold text-blue-400 ">{credit}</span> credits
         </p>
-        {/* {(session.customer as string)}. */}
-
-
       </div>
     );
   }

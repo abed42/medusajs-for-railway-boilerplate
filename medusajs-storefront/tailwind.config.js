@@ -20,6 +20,9 @@ module.exports = {
         padding: "padding-top padding-right padding-bottom padding-left",
       },
       colors: {
+        'nav-bg': '#F2F2F2',
+        'credit-btn': '#DBFE3F',
+        'midnight': '#121063',  
         grey: {
           0: "#FFFFFF",
           5: "#F9FAFB",

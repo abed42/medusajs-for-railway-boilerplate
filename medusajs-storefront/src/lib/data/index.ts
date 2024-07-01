@@ -53,11 +53,41 @@ const getMedusaHeaders = (tags: string[] = []) => {
 
 // Credit actions
 export async function getCredit() {
-  const headers = getMedusaHeaders(["customer"])
-  return medusaClient.customers
-    .retrieve(headers)
-    .then(({ customer }) => customer)
-    .catch((err) => null)
+  // const headers = getMedusaHeaders(["customer"])
+  // return medusaClient.customers
+  //   .retrieve(headers)
+  //   .then(({ customer }) => customer)
+  //   .catch((err) => null)
+
+interface Params {
+  id: string;
+  [key: string]: string; // Index signature
+}
+
+  const customer = await getCustomer();
+  if (!customer) return false;
+
+  const url = new URL(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/credit`);
+  const params: Params = { id: customer.id };
+  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      // Removed 'Content-Type': 'application/json', assuming it's not needed for GET requests
+    });
+
+    if (!response.ok) { // Check if the request was successful
+      throw new Error(`Failed to fetch credit information: ${response.statusText}`);
+    }
+    const data = await response.json(); // Assuming the API returns JSON
+
+    return data.credit.credit;
+
+  } catch (error) {
+    console.error("Failed to fetch credit information:", error);
+    return false; // Or handle the error as needed
+  }
 }
 
 // Cart actions

@@ -1,11 +1,12 @@
+import { connect } from "http2";
 import  CreditService  from "../../../services/credit";
 
 interface CreditTopUpRequestBody {
-  userId: string;
-  amount: number;
+  customerId: string;
+  credit: number;
 }
 interface RequestBody {
-  id: string; // Assuming the ID is a string. Adjust the type as necessary.
+  customerId: string; 
 }
 
 import type { MedusaRequest, MedusaResponse } from "@medusajs/medusa";
@@ -15,10 +16,10 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const creditService: CreditService = req.scope.resolve("creditService");
   try {
 
-  const customer = await creditService.retrieve((req.body as RequestBody).id)
-    console.log(customer, "customer log here");
+  const credit = await creditService.retrieve((req.body as RequestBody).customerId)
+    console.log(credit, "credit log here");
     res.json({
-      customer
+      credit
     });
 
   } catch (error) {
@@ -32,10 +33,11 @@ export async function PUT(req: MedusaRequest<{credit: number, id: string}>, res:
   const creditService: CreditService = req.scope.resolve("creditService");
   try {
 
-  const customer = await creditService.update({credid: req.body.credit, id :req.body.id})
-    console.log(customer, "customer log here");
+  const credit = await creditService.update({credit: req.body.credit, id :req.body.id})
+    console.log(req.body.credit, "req.body log here");
+    console.log(credit, "credit log here");
     res.json({
-      customer
+      credit
     });
 
   } catch (error) {
@@ -44,19 +46,19 @@ export async function PUT(req: MedusaRequest<{credit: number, id: string}>, res:
 
   }
 }
-// export async function POST(req: MedusaRequest<CreditTopUpRequestBody>, res: MedusaResponse) {
-//   const { userId, amount } = req.body;
+export async function POST(req: MedusaRequest<CreditTopUpRequestBody>, res: MedusaResponse) {
+  const { customerId, credit } = req.body;
 
-//   // Validate input (not shown)
+  // Validate input (not shown)
 
-//   const customerService: CreditService = req.scope.resolve("customerService");
+  const creditService: CreditService = req.scope.resolve("creditService");
 
-//   try {
-//     await customerService.updateCredit(userId, amount);
+  try {
+    await creditService.create({customerId: customerId, credit: credit});
 
-//     res.json({ success: true, message: "Credit successfully topped up." });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ success: false, message: "Failed to top up credit." });
-//   }
-// }
+    res.json({ success: true, message: "Credit successfully topped up." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Failed to top up credit." });
+  }
+}

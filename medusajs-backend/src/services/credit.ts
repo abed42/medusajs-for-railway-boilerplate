@@ -18,19 +18,20 @@ class CreditService extends TransactionBaseService {
     this.creditRepository_ = creditRepository;
   }
 
-  async retrieve(id : string): Promise<Credit | undefined> {
-    const customerRepo = this.activeManager_.withRepository(
+  async retrieve(customerId : string): Promise<Credit | undefined> {
+    const creditRepo = this.activeManager_.withRepository(
       this.creditRepository_
     );
 
-    const credit = await customerRepo.findOne({
-      where: { id },
+    const credit = await creditRepo.findOne({
+      where: { customerId },
     });
     console.log(credit, "credit log here");
     return credit;
   }
 
-  async update(data: {credid: number, id : string}): Promise<Credit | null> {
+  async update(data: {credit: number, id : string}): Promise<Credit | null> {
+    console.log(data)
     return await this.atomicPhase_(
       async (transactionManager: EntityManager) => {
         const creditRepository = transactionManager.withRepository(
@@ -40,11 +41,25 @@ class CreditService extends TransactionBaseService {
         const credit = await this.retrieve(data.id);
 
        if (!credit){
+        console.log("credit not found")
           return null
         }
-        credit.credit += data.credid
+        credit.credit += data.credit
         return await creditRepository.save(credit);
       }
+    );
+  }
+
+  async create(data: {credit: number, customerId : string}): Promise<Credit | null> {
+    return await this.atomicPhase_(
+      async (transactionManager: EntityManager) => {
+        const creditRepository = transactionManager.withRepository(
+          this.creditRepository_
+        );
+        // add credit and customer id to credit table
+        const credit = await creditRepository.save(data);
+        return credit;
+      } 
     );
   }
 }

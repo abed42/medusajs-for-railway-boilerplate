@@ -112,6 +112,7 @@ export const formatVariantPrice = ({
   includeTaxes = true,
   ...rest
 }: FormatVariantPriceParams) => {
+  debugger;
   const amount = computeVariantPrice({ variant, region, includeTaxes })
 
   return convertToLocale({
@@ -240,13 +241,15 @@ const convertToLocale = ({
   maximumFractionDigits,
   locale = "en-US",
 }: ConvertToLocaleParams) => {
+  // TODO fix this
   return currency_code && !isEmpty(currency_code)
     ? new Intl.NumberFormat(locale, {
         style: "currency",
         currency: currency_code,
-        minimumFractionDigits,
-        maximumFractionDigits,
-      }).format(amount)
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+      }).format(amount).replace('$', ' credits ').split(' ').reverse().join(' ')
+    // }).format(amount) -- old code
     : amount.toString()
 }
 
