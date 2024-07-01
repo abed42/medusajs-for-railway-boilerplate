@@ -1,4 +1,5 @@
 import stripe from "config/stripe";
+import { getCredit } from '@lib/data';
 
 async function getSession(sessionId: string) {
   const session = await stripe.checkout.sessions.retrieve(sessionId!);
@@ -13,14 +14,15 @@ export default async function CheckoutReturn({ searchParams }: { searchParams: S
 
   if (!sessionId) {
     console.error("Session ID is undefined.");
-    // Handle the case where sessionId is undefined, e.g., return an error message or a loading indicator
-    return <p>Loading...</p>; // Or any other appropriate response
+    return <p>Loading...</p>;
   }
 
   const session = await getSession(sessionId);
-
-  console.log(session);
-
+  const fetchData = async () => {
+    return await getCredit();
+    }
+  const credit = await fetchData();
+  
   if (session?.status === "open") {
     return <p>Payment did not work.</p>;
   }
@@ -36,11 +38,8 @@ export default async function CheckoutReturn({ searchParams }: { searchParams: S
         <br />
 
         <p className="text-3xl text-center my-20">
-        You now have <span className="font-bold text-blue-400 ">100</span> credits
+        You now have <span className="font-bold text-blue-400 ">{credit}</span> credits
         </p>
-        {/* {(session.customer as string)}. */}
-
-
       </div>
     );
   }
