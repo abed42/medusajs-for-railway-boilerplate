@@ -30,7 +30,7 @@ class CreditService extends TransactionBaseService {
     return credit;
   }
 
-  async update(data: {credit: number, id : string}): Promise<Credit | null> {
+  async update(data: {credit: number, id : string, action: string}): Promise<Credit | null> {
     console.log(data)
     return await this.atomicPhase_(
       async (transactionManager: EntityManager) => {
@@ -44,11 +44,16 @@ class CreditService extends TransactionBaseService {
         console.log("credit not found")
           return null
         }
-        credit.credit += data.credit
+        if(data.action === "add"){
+          credit.credit += data.credit
+        } else if(data.action === "buy") {
+          credit.credit -= data.credit
+        }
         return await creditRepository.save(credit);
       }
     );
   }
+
 
   async create(data: {credit: number, customerId : string}): Promise<Credit | null> {
     return await this.atomicPhase_(

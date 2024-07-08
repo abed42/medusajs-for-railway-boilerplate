@@ -5,7 +5,7 @@ import {
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
 import { useCallback, useRef, useState } from "react";
-import CreditPricing from "./cards";
+import CreditPricing from "./pricing";
 
 export default function EmbeddedCheckoutButton() {
   const stripePromise = loadStripe(

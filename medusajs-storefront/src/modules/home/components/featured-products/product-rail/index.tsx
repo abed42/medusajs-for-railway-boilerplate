@@ -4,7 +4,6 @@ import { Text } from "@medusajs/ui"
 import InteractiveLink from "@modules/common/components/interactive-link"
 import ProductPreview from "@modules/products/components/product-preview"
 import { ProductCollectionWithPreviews } from "types/global"
-
 export default function ProductRail({
   collection,
   region,
@@ -20,16 +19,17 @@ export default function ProductRail({
 
   return (
     <div className="content-container py-12 small:py-24">
-      <div className="flex justify-between mb-8">
-        <Text className="txt-xlarge">{collection.title}</Text>
-        <InteractiveLink href={`/collections/${collection.handle}`}>
-          View all
-        </InteractiveLink>
+      <div className="flex justify-center align-center mb-8">
+        <Text className="txt-xlarge uppercase ">{collection.title}</Text>
       </div>
-      <ul className="grid grid-cols-2 small:grid-cols-3 gap-x-6 gap-y-24 small:gap-y-36">
-        {products &&
+
+      <ul className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 2xl:grid-cols-6 gap-x-6 gap-y-24 small:gap-y-36 m-auto">
+      {/* <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-24 small:gap-y-36 m-auto"> */}
+      {/* <SwiperComponent spaceBetween={100} slidesPerView={2} className=" flex justify-center align-center h-full m-auto">  */}
+      {products &&
           products.map((product) => (
             <li key={product.id}>
+
               <ProductPreview
                 productPreview={product}
                 region={region}
@@ -37,7 +37,13 @@ export default function ProductRail({
               />
             </li>
           ))}
+      {/* </SwiperComponent> */}
       </ul>
+      <div className="flex justify-center align-center mt-12">
+      <InteractiveLink href={`/collections/${collection.handle}`}>
+          View all
+      </InteractiveLink>
+      </div>
     </div>
   )
 }

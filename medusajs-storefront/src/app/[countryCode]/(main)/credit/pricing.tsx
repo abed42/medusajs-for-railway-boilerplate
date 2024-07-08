@@ -1,40 +1,39 @@
-import { useState } from 'react'
-// import { Radio, RadioGroup } from '@headlessui/react'
-// import { CheckIcon } from '@heroicons/react/20/solid'
-
+import { CheckIcon } from '@heroicons/react/20/solid'
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 const tiers = [
   {
-    name: '50 Credits',
-    id: 'tier-freelancer',
+    name: 'TRIAL',
+    id: 'tier-trial',
     href: '#',
-    price: { monthly: '$15', annually: '$144' },
+    price: { monthly: 'free', annually: '$144' },
     description: 'The essentials to provide your best work for clients.',
     features: ['5 products', 'Up to 1,000 subscribers', 'Basic analytics', '48-hour support response time'],
     mostPopular: false,
   },
   {
-    name: '100 Credits',
-    id: 'tier-startup',
+    name: 'ESSENTIAL',
+    id: 'tier-essential',
     href: '#',
-    price: { monthly: '$30', annually: '$288' },
+    price: { monthly: '999€', annually: '9,990€' },
     description: 'A plan that scales with your rapidly growing business.',
     features: [
-      '25 products',
-      'Up to 10,000 subscribers',
-      'Advanced analytics',
-      '24-hour support response time',
-      'Marketing automations',
+      'all that\' included in the free plan',
+      '20 credits/a month',
+      '1 garment / 49,9 €',
+      'Access to the full library',
+      'Tax, VAT not included',
+      'Technical support',
     ],
     mostPopular: true,
   },
   {
-    name: '300 Credits',
+    name: 'PREMIUM',
     id: 'tier-enterprise',
     href: '#',
-    price: { monthly: '$60', annually: '$576' },
+    price: { monthly: '1499€', annually: '14,990€' },
     description: 'Dedicated support and infrastructure for your company.',
     features: [
-      'Unlimited products',
+      '40 credits/a month',
       'Unlimited subscribers',
       'Advanced analytics',
       '1-hour, dedicated support response time',
@@ -44,7 +43,10 @@ const tiers = [
     mostPopular: false,
   },
 ]
-
+const frequencies = [
+  { value: 'monthly', label: 'Monthly', priceSuffix: '/month' },
+  { value: 'annually', label: 'Annually', priceSuffix: '/year' },
+]
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
@@ -56,12 +58,12 @@ export default function CreditPricing({ handler }: { handler: (...args: any[]) =
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
           {/* <h2 className="text-base font-semibold leading-7 text-indigo-600">Pricing</h2> */}
-          <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900 sm:text-5xl">
             Buy Credits!
           </p>
         </div>
-        <p className="mx-auto mt-6 mb-20 max-w-2xl text-center text-lg leading-8 text-gray-600">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto sint odio amet reprehenderit velit magnam doloremque eos fugit
+        <p className="mx-auto mt-6 mb-20 max-w-2xl text-center text-4xl leading-8 text-gray-600">
+          Pricing plan that matches your needs.
         </p>
 
         <div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -69,7 +71,7 @@ export default function CreditPricing({ handler }: { handler: (...args: any[]) =
             <div
               key={tier.id}
               className={classNames(
-                tier.mostPopular ? 'ring-2 ring-indigo-600' : 'ring-1 ring-gray-200',
+                tier.mostPopular ? 'ring-2' : 'ring-1 ring-gray-200',
                 'rounded-3xl p-8 xl:p-10'
               )}
             >
@@ -89,28 +91,31 @@ export default function CreditPricing({ handler }: { handler: (...args: any[]) =
                   </p>
                 ) : null}
               </div>
+
               <p className="mt-4 text-sm leading-6 text-gray-600">{tier.description}</p>
+              <div className=" flex flex-col items-center justify-center align-center">
               <p className="mt-6 flex items-baseline gap-x-1">
                 {/* <span className="text-4xl font-bold tracking-tight text-gray-900">{tier.price[frequency.value]}</span> */}
-                {/* <span className="text-4xl font-bold tracking-tight text-gray-900">50</span> */}
-                {/* <span className="text-sm font-semibold leading-6 text-gray-600">{frequency.priceSuffix}</span> */}
+                <span className="text-4xl font-bold tracking-tight text-gray-900">{tier.price.monthly}</span>
+                <span className="text-sm font-semibold leading-6 text-gray-600">{frequencies[0].priceSuffix}</span>
               </p>
               <button
                 onClick={handler}
                 aria-describedby={tier.id}
                 className={classNames(
                   tier.mostPopular
-                    ? 'bg-indigo-600 text-white shadow-sm hover:bg-indigo-500'
-                    : 'text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300',
-                  'mt-6 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                  ? 'bg-trendi shadow-sm hover:bg-trendi text-black'
+                  : 'text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300',
+                  ' w-full mt-6 block rounded-xl px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
                 )}
-              >
+                >
                 Buy Credits
               </button>
-              <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10">
+              </div>
+              <ul role="list" className="mt-8 space-y-3 text-lg leading-6 text-gray-600 xl:mt-10">
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex gap-x-3">
-                    {/* <CheckIcon className="h-6 w-5 flex-none text-indigo-600" aria-hidden="true" /> */}
+                    <CheckIcon className="h-6 w-5 flex-none text-trendi" aria-hidden="true" />
                     {feature}
                   </li>
                 ))}
