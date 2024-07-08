@@ -248,7 +248,7 @@ const convertToLocale = ({
         currency: currency_code,
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
-      }).format(amount).replace('$', ' credits ').split(' ').reverse().join(' ')
+      }).format(amount).replace('$', ' credit ').split(' ').reverse().join(' ')
     // }).format(amount) -- old code
     : amount.toString()
 }

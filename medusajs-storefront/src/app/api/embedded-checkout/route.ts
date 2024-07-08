@@ -8,7 +8,9 @@ const fulfillOrder = async (): Promise<boolean> => {
   
     const customer = await getCustomer();
     if (!customer) return false;
-  
+
+    console.log("customer from stripe 🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑", customer)
+
     await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/credit`, {
       method: 'PUT',
       headers: {

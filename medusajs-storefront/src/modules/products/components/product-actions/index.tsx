@@ -1,23 +1,33 @@
 "use client"
 
 import { Region } from "@medusajs/medusa"
-import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
+import { PricedProduct , VariantPriceSetRes} from "@medusajs/medusa/dist/types/pricing"
 import { Button } from "@medusajs/ui"
 import { isEqual } from "lodash"
 import { useParams } from "next/navigation"
-import { useEffect, useMemo, useRef, useState } from "react"
-
+import { useContext, useEffect, useMemo, useRef, useState } from "react"
+import { Cart } from '@medusajs/medusa';
 import { useIntersection } from "@lib/hooks/use-in-view"
 import { addToCart } from "@modules/cart/actions"
 import Divider from "@modules/common/components/divider"
 import OptionSelect from "@modules/products/components/option-select"
+import { getProductPrice } from "@lib/util/get-product-price"
 
 import MobileActions from "../mobile-actions"
 import ProductPrice from "../product-price"
-
+import NotEnoughCredit from "@modules/credit/components/modal"
+import PaymentButton from "@modules/checkout/components/payment-button"
+import { placeOrder } from "@modules/checkout/actions"
+import { getCredit, useCredits } from "@lib/data"
+import { useCreditContext } from "@lib/context/credit-context"
+import Toll from '@mui/icons-material/Toll';
 type ProductActionsProps = {
   product: PricedProduct
   region: Region
+}
+
+interface AssetUrl {
+  href: string;
 }
 
 export type PriceType = {
@@ -33,11 +43,20 @@ export default function ProductActions({
 }: ProductActionsProps) {
   const [options, setOptions] = useState<Record<string, string>>({})
   const [isAdding, setIsAdding] = useState(false)
-
+  // const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const countryCode = useParams().countryCode as string
-
+  const [cart, setCart] = useState<Cart>()
   const variants = product.variants
+  const {credit,refetchCredit} = useCreditContext()
 
+  // NotEnoughCredit modal
+  const [open, setOpen] = useState(false)
+const [productPrice, setProductPrice] = useState<PriceType>({
+  calculated_price: "",
+  original_price: "",
+  price_type: "default",
+  percentage_diff: "",
+})
   // initialize the option state
   useEffect(() => {
     const optionObj: Record<string, string> = {}
@@ -108,24 +127,94 @@ export default function ProductActions({
 
   const inView = useIntersection(actionsRef, "0px")
 
-  // add the selected variant to the cart
-  const handleAddToCart = async () => {
-    if (!variant?.id) return null
+const createPaymentSession = async () => {
+    await fetch("/api/cart",{
+      headers: {
+        "Content-Type": "application/json",
+      },
+        })
+            .then((res) => res.json())
+            .then((data) => console.log('login cart from product actions',data))
+            .finally(() => {
+              placeOrder().catch((err) => {
+                console.error(err)
+              })
+              setIsAdding(false)
+            });
+  }
+  const { cheapestPrice, variantPrice } = getProductPrice({
+    product,
+    variantId: variant?.id,
+    region,
+  })
+// Assuming `addToCart`, `createPaymentSession`, and `useCredits` are defined elsewhere and properly handle promises.
 
-    setIsAdding(true)
+const initiateDownload = async (url?: string): Promise<boolean> => {
+  if (!url || typeof url !== 'string') {
+    console.error("Invalid asset URL.");
+    return false;
+  }
+  // Simulate download initiation success since we cannot catch errors from window.location.href
+  const confirmed = window.confirm("Start downloading?");
+  if (!confirmed) {
+    console.error("Download cancelled.");
+    return false;
+  }
+  window.location.href = url;
+  // Assuming success since we navigate away from the page
+  return true;
+};
 
+const handleDownload = async () => {
+  console.log('credit check',credit)
+  console.log('price check',variantPrice?.calculated_price ?? 0)
+  console.log('cheapest price', parseFloat(cheapestPrice?.original_price || '0'));
+
+  if (cheapestPrice?.original_price && credit < parseFloat(cheapestPrice?.original_price)){
+    console.log('not enough credit')
+    setOpen(true)
+    return null
+  }
+  setIsAdding(true);
+  try {
     await addToCart({
-      variantId: variant.id,
+      variantId: variant?.id ?? "",
       quantity: 1,
       countryCode,
-    })
+    });
 
-    setIsAdding(false)
+    await createPaymentSession();
+    await useCredits(variantPrice?.calculated_price ?? 0);
+
+    const downloadSuccessful = await initiateDownload(product.metadata?.assetUrl as string | undefined);
+    if (!downloadSuccessful) {
+      throw new Error("Failed to initiate download.");
+    }
+  } catch (error) {
+    console.error("An operation failed:", error);
+  } finally {
+    Promise.all([
+      refetchCredit(),
+      new Promise<void>((resolve) => {
+        // Immediately invoke setIsAdding(false) after refetchCredit completes
+        Promise.resolve(refetchCredit()).then(() => {
+          setIsAdding(false);
+          resolve(); // Resolve the promise to signal completion
+        });      
+      }),
+    ]).then(() => {
+      // All operations completed successfully
+    }).catch((error) => {
+      // Handle any errors that occurred during refetchCredit or setIsAdding(false)
+      console.error("An error occurred:", error);
+    });
+  
   }
-
+};
   return (
     <>
       <div className="flex flex-col gap-y-2" ref={actionsRef}>
+        <NotEnoughCredit open={open} setOpen={setOpen} />
         <div>
           {product.variants.length > 1 && (
             <div className="flex flex-col gap-y-4">
@@ -145,22 +234,25 @@ export default function ProductActions({
             </div>
           )}
         </div>
-
+        <div className="flex items-center gap-x-2">
+        <Toll />
         <ProductPrice product={product} variant={variant} region={region} />
 
+        </div>
+        <div className="flex gap-x-2">
+
         <Button
-          onClick={handleAddToCart}
-          disabled={!inStock || !variant}
+          disabled={isAdding}
+          onClick={handleDownload}
+          // disabled={!inStock || !variant}
           variant="primary"
           className="w-full h-10"
           isLoading={isAdding}
-        >
-          {!variant
-            ? "Select variant"
-            : !inStock
-            ? "Out of stock"
-            : "Add to cart"}
+          >
+          Download
         </Button>
+            </div>
+          {/* <PaymentButton cart={cart}/> */}
         <MobileActions
           product={product}
           variant={variant}
@@ -168,7 +260,7 @@ export default function ProductActions({
           options={options}
           updateOptions={updateOptions}
           inStock={inStock}
-          handleAddToCart={handleAddToCart}
+          handleAddToCart={handleDownload}
           isAdding={isAdding}
           show={!inView}
         />

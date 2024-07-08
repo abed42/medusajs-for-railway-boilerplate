@@ -23,6 +23,7 @@ import { ProductCategoryWithChildren, ProductPreviewType } from "types/global"
 import { medusaClient } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
 import { cookies } from "next/headers"
+import { consumers } from "stream"
 
 const emptyResponse = {
   response: { products: [], count: 0 },
@@ -53,34 +54,21 @@ const getMedusaHeaders = (tags: string[] = []) => {
 
 // Credit actions
 export async function getCredit() {
-  // const headers = getMedusaHeaders(["customer"])
-  // return medusaClient.customers
-  //   .retrieve(headers)
-  //   .then(({ customer }) => customer)
-  //   .catch((err) => null)
-
-interface Params {
-  id: string;
-  [key: string]: string; // Index signature
-}
-
+  
   const customer = await getCustomer();
   if (!customer) return false;
+  console.log(customer, "customer log heeeere");
 
-  const url = new URL(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/credit`);
-  const params: Params = { id: customer.id };
-  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+  const url = new URL(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/credit/?customerId=${customer.id}`);
 
   try {
-    const response = await fetch(url, {
-      method: 'GET',
-      // Removed 'Content-Type': 'application/json', assuming it's not needed for GET requests
-    });
+    const response = await fetch(url);
 
     if (!response.ok) { // Check if the request was successful
       throw new Error(`Failed to fetch credit information: ${response.statusText}`);
     }
     const data = await response.json(); // Assuming the API returns JSON
+    console.log("🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥",data)
 
     return data.credit.credit;
 
@@ -89,7 +77,6 @@ interface Params {
     return false; // Or handle the error as needed
   }
 }
-
 // Cart actions
 export async function createCart(data = {}) {
   const headers = getMedusaHeaders(["cart"])
@@ -101,6 +88,31 @@ export async function createCart(data = {}) {
       console.log(err)
       return null
     })
+}
+
+
+
+export async function useCredits(amount: any): Promise<boolean> {
+  try {
+    const customer = await getCustomer();
+    if (!customer) return false;
+
+   await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/credit/buy`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          id: customer.id,
+          credit: 10
+      }),
+    });
+    console.log("Credits are being used successfully");
+    return true;
+  } catch (error) {
+    console.error(`Error using credits:`, error);
+    return false; // Return false or handle the error as needed
+  }
 }
 
 export async function updateCart(cartId: string, data: StorePostCartsCartReq) {

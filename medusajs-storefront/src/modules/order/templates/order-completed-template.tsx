@@ -7,7 +7,7 @@ import Help from "@modules/order/components/help"
 import Items from "@modules/order/components/items"
 import OnboardingCta from "@modules/order/components/onboarding-cta"
 import OrderDetails from "@modules/order/components/order-details"
-import ShippingDetails from "@modules/order/components/shipping-details"
+// import ShippingDetails from "@modules/order/components/shipping-details"
 import PaymentDetails from "@modules/order/components/payment-details"
 
 type OrderCompletedTemplateProps = {
@@ -37,7 +37,7 @@ export default function OrderCompletedTemplate({
           </Heading>
           <Items items={order.items} region={order.region} />
           <CartTotals data={order} />
-          <ShippingDetails order={order} />
+          {/* <ShippingDetails order={order} /> */}
           <PaymentDetails order={order} />
           <Help />
         </div>
