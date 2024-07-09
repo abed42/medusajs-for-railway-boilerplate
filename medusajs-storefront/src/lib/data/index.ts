@@ -92,7 +92,7 @@ export async function createCart(data = {}) {
 
 
 
-export async function useCredits(amount: any): Promise<boolean> {
+export async function spendCredits(amount: any): Promise<boolean> {
   try {
     const customer = await getCustomer();
     if (!customer) return false;

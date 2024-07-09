@@ -24,8 +24,6 @@ export default function ProductRail({
       </div>
 
       <ul className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 2xl:grid-cols-6 gap-x-6 gap-y-24 small:gap-y-36 m-auto">
-      {/* <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-24 small:gap-y-36 m-auto"> */}
-      {/* <SwiperComponent spaceBetween={100} slidesPerView={2} className=" flex justify-center align-center h-full m-auto">  */}
       {products &&
           products.map((product) => (
             <li key={product.id}>
@@ -37,7 +35,6 @@ export default function ProductRail({
               />
             </li>
           ))}
-      {/* </SwiperComponent> */}
       </ul>
       <div className="flex justify-center align-center mt-12">
       <InteractiveLink href={`/collections/${collection.handle}`}>

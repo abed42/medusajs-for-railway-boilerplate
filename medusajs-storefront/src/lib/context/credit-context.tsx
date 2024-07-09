@@ -54,7 +54,7 @@ const CreditContextProvider = ({ children, credit }: ContextProviderProps) => {
   useEffect(() => {
     console.log(credit, "credit from context")
     fetchInitialCredit(); // Execute the async function
-  }, []);
+  }, [credit]);
 
   const addCredit = (credit: number) => {
     setCreditBalance(creditBalance + credit);

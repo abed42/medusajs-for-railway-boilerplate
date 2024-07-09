@@ -18,7 +18,7 @@ import ProductPrice from "../product-price"
 import NotEnoughCredit from "@modules/credit/components/modal"
 import PaymentButton from "@modules/checkout/components/payment-button"
 import { placeOrder } from "@modules/checkout/actions"
-import { getCredit, useCredits } from "@lib/data"
+import { getCredit, spendCredits } from "@lib/data"
 import { useCreditContext } from "@lib/context/credit-context"
 import Toll from '@mui/icons-material/Toll';
 type ProductActionsProps = {
@@ -184,8 +184,10 @@ const handleDownload = async () => {
     });
 
     await createPaymentSession();
-    await useCredits(variantPrice?.calculated_price ?? 0);
-
+    const creditsSpent = await spendCredits(variantPrice?.calculated_price ?? 0)
+    if (!creditsSpent) {
+      throw new Error("Failed to spend credits");
+    }
     const downloadSuccessful = await initiateDownload(product.metadata?.assetUrl as string | undefined);
     if (!downloadSuccessful) {
       throw new Error("Failed to initiate download.");
@@ -198,12 +200,11 @@ const handleDownload = async () => {
       new Promise<void>((resolve) => {
         // Immediately invoke setIsAdding(false) after refetchCredit completes
         Promise.resolve(refetchCredit()).then(() => {
-          setIsAdding(false);
           resolve(); // Resolve the promise to signal completion
         });      
       }),
     ]).then(() => {
-      // All operations completed successfully
+      setIsAdding(false);
     }).catch((error) => {
       // Handle any errors that occurred during refetchCredit or setIsAdding(false)
       console.error("An error occurred:", error);
@@ -241,17 +242,17 @@ const handleDownload = async () => {
         </div>
         <div className="flex gap-x-2">
 
-        <Button
-          disabled={isAdding}
-          onClick={handleDownload}
-          // disabled={!inStock || !variant}
-          variant="primary"
-          className="w-full h-10"
-          isLoading={isAdding}
-          >
-          Download
-        </Button>
-            </div>
+            <Button
+              disabled={isAdding}
+              onClick={handleDownload}
+              // disabled={!inStock || !variant}
+              variant="primary"
+              className="w-full h-10"
+              isLoading={isAdding}
+              >
+              Download
+            </Button>
+        </div>
           {/* <PaymentButton cart={cart}/> */}
         <MobileActions
           product={product}
