@@ -2,13 +2,15 @@ import { Github } from "@medusajs/icons"
 import { Button, Heading } from "@medusajs/ui"
 import Image from "next/image"
 import banner from "/public/banner.png"
+import Categories from "./flyout-menu"
 
 const Hero = () => {
   return (
-    <div className="h-[75vh] w-full border-b border-ui-border-base relative bg-ui-bg-subtle">
-      <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center small:p-32 gap-6">
+    <div className="h-[75vh] w-full border-b border-ui-border-base relative">
+      <Categories />
+      <div className=" flex justify-center items-center w-full">
         <Image src={banner} alt="Trendi banner"
-        className="w-full mx-auto"/>
+        className="w-5/6 mx-auto"/>
       </div>
     </div>
   )
