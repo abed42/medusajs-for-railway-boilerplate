@@ -48,7 +48,7 @@ const ProfileEmail: React.FC<MyInformationProps> = ({ customer }) => {
             type="phone"
             autoComplete="phone"
             required
-            defaultValue={customer.phone}
+            defaultValue={customer.phone.split(",")[1]}
           />
         </div>
       </AccountInfo>

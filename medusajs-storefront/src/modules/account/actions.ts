@@ -26,7 +26,7 @@ export async function signUp(_currentState: unknown, formData: FormData) {
     password: formData.get("password"),
     first_name: formData.get("first_name"),
     last_name: formData.get("last_name"),
-    phone: formData.get("phone"),
+    phone: (formData.get("role")  + ", " + formData.get("company")), // here the customer asked for the company and role and then added them instead of the phone number tht they didn't need 
   } as StorePostCustomersReq
 
   try {
@@ -96,7 +96,7 @@ export async function updateCustomerEmail(
 
 export async function updateCustomerPhone(
   _currentState: Record<string, unknown>,
-  formData: FormData
+  formData: FormData,
 ) {
   const customer = {
     phone: formData.get("phone"),

@@ -7,6 +7,7 @@ import FastDelivery from "@modules/common/icons/fast-delivery"
 import Refresh from "@modules/common/icons/refresh"
 
 import Accordion from "./accordion"
+import Link from "next/link"
 
 type ProductTabsProps = {
   product: PricedProduct
@@ -45,39 +46,47 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
 const ProductInfoTab = ({ product }: ProductTabsProps) => {
   return (
     <div className="text-small-regular py-8">
-      <div className="grid grid-cols-2 gap-x-8">
-        <div className="flex flex-col gap-y-4">
-          <div>
-            <span className="font-semibold">Material</span>
-            <p>{product.material ? product.material : "-"}</p>
-          </div>
-          <div>
-            <span className="font-semibold">Country of origin</span>
-            <p>{product.origin_country ? product.origin_country : "-"}</p>
-          </div>
-          <div>
-            <span className="font-semibold">Type</span>
-            <p>{product.type ? product.type.value : "-"}</p>
-          </div>
+      <div className="flex flex-col gap-y-4">
+        <div>
+          <p className="font-bold">DIGITAL FABRIC</p>
+          <p className="mb-4">
+            This virtual prototype has been simulated using a digital fabric
+            with the following properties:
+          </p>
+          <p>{product.material ? product.material : "-"}</p>
         </div>
-        <div className="flex flex-col gap-y-4">
+        <div>
           <div>
-            <span className="font-semibold">Weight</span>
-            <p>{product.weight ? `${product.weight} g` : "-"}</p>
-          </div>
-          <div>
-            <span className="font-semibold">Dimensions</span>
+            <p className="font-semibold">MEASUREMENTS</p>
             <p>
-              {product.length && product.width && product.height
-                ? `${product.length}L x ${product.width}W x ${product.height}H`
-                : "-"}
+             The patterns are in a standard base size and are not graded.
+            </p>
+            <p>
+              Check the measurement charts used for our avatars {" "}
+              <Link  href="https://res.cloudinary.com/dexj5csg8/image/upload/v1721210457/Mesurements%20chart/2de8cbcd-8db8-4a0b-a2be-352829c18b72_uyrcjc.jpg" passHref legacyBehavior>
+                <a className="underline text-blue-600"target="_blank">
+                    here. 
+                </a>
+            </Link>
             </p>
           </div>
         </div>
       </div>
+
       {product.tags?.length ? (
-        <div>
+        <div className="mt-4">
           <span className="font-semibold">Tags</span>
+          {/* <p>{product.tags.join(", ")}</p> */}
+          <ul className="mt-4 flex flex-wrap ">
+            {product.tags.map((tag) => (
+              <li
+                className="mr-2 px-2 bg-nav-bg rounded-md text-gray-600"
+                key={tag.value}
+              >
+                {tag.value}
+              </li>
+            ))}
+          </ul>
         </div>
       ) : null}
     </div>
@@ -92,7 +101,8 @@ const ShippingInfoTab = () => {
           <div>
             {/* <span className="font-semibold">Fast delivery</span> */}
             <p className="max-w-sm">
-            Digital pattern (DXF). Virtual prototype for CLO Virtual Fashion (ZPRJ). TechPack and 2D CAD for Illustrator (AI, PDF).
+              Digital pattern (DXF). Virtual prototype for CLO Virtual Fashion
+              (ZPRJ). TechPack and 2D CAD for Illustrator (AI, PDF).
             </p>
           </div>
         </div>

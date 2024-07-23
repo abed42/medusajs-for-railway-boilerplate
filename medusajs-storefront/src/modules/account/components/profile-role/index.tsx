@@ -13,7 +13,7 @@ type MyInformationProps = {
   customer: Omit<Customer, "password_hash">
 }
 
-const ProfileEmail: React.FC<MyInformationProps> = ({ customer }) => {
+const ProfileRole: React.FC<MyInformationProps> = ({ customer }) => {
   const [successState, setSuccessState] = React.useState(false)
 
   const [state, formAction] = useFormState(updateCustomerPhone, {
@@ -33,8 +33,8 @@ const ProfileEmail: React.FC<MyInformationProps> = ({ customer }) => {
     <form action={formAction} className="w-full">
       <AccountInfo
         // label="Phone"
-        label="Company"
-        currentInfo={`${customer.phone.split(",")[1]}`}
+        label="Role"
+        currentInfo={`${customer.phone.split(",")[0]}`}
         isSuccess={successState}
         isError={!!state.error}
         errorMessage={state.error}
@@ -43,7 +43,7 @@ const ProfileEmail: React.FC<MyInformationProps> = ({ customer }) => {
         <div className="grid grid-cols-1 gap-y-2">
           <Input
             // label="Phone"
-            label="Company"
+            label="Role"
             name="phone"
             type="phone"
             autoComplete="phone"
@@ -56,4 +56,4 @@ const ProfileEmail: React.FC<MyInformationProps> = ({ customer }) => {
   )
 }
 
-export default ProfileEmail
+export default ProfileRole

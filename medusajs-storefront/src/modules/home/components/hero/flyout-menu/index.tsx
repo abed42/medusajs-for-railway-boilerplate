@@ -19,15 +19,17 @@ const items: Item[] = [
   { name: 'MEN', handles: [] },
   { name: 'KIDS', handles: [] },
 ];
-
-
-
+const kidsItems: Item[] = [
+  { name: 'girls', handles: [] },
+  { name: 'boys', handles: [] },
+]
 interface DropdownProps {
   name: string;
   handles: Array<any>;
+  kids: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ name, handles }) => {
+const Dropdown: React.FC<DropdownProps> = ({ name, handles, kids}) => {
   return (
     <Popover className="relative">
       <PopoverButton className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
@@ -40,9 +42,16 @@ const Dropdown: React.FC<DropdownProps> = ({ name, handles }) => {
         className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
       >
         <div className="w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
-          {handles.map((handle) => (
-            <InteractiveLink href={`/categories/${handle.handle}`} key={handle.name}>
+          { kids ? kidsItems.map((handle) => (
+              <InteractiveLink href={`/categories/${handle.handles}`} key={handle.name}>
               {handle.name}
+            </InteractiveLink>
+          )) :
+          handles.map((handle) => (
+            <InteractiveLink href={`/categories/${handle.handle}`} key={handle.name}>
+              <span className='text-black hover:font-bold'>
+                 {handle.name}
+              </span>
             </InteractiveLink>
           ))}
 
@@ -57,12 +66,14 @@ export default async function Categories() {
   
   items[0].handles = product_categories.filter((item) => item.handle.toLowerCase().startsWith('women-'));
   items[1].handles = product_categories.filter((item) => item.handle.toLowerCase().startsWith('men-'));
-  console.log(items[0].handles)
+  kidsItems[0].handles = product_categories.filter((item) => item.handle.toLowerCase().startsWith('girls-'));
+  kidsItems[1].handles = product_categories.filter((item) => item.handle.toLowerCase().startsWith('boys-'));
+console.log(kidsItems, 'kidsItems')
   return (
-    <div className='flex justify-center align-center justify-around my-12  sm:mx-32 md:mx-64 lg:mx-96'>
+    <div className='flex align-center justify-around my-12  sm:mx-32 md:mx-64 lg:mx-96'>
       {items.map((item) => (
         <React.Fragment key={item.name}>
-          <Dropdown name={item.name} handles={item.handles} />
+          <Dropdown name={item.name} handles={item.handles} kids={item.name === 'KIDS' ? true : false } />
         </React.Fragment>
       ))}
     </div>

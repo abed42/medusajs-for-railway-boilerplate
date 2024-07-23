@@ -6,12 +6,12 @@ import Categories from "./flyout-menu"
 
 const Hero = () => {
   return (
-    <div className="h-[75vh] w-full border-b border-ui-border-base relative">
+    <div className="w-full relative">
       <Categories />
-      <div className=" flex justify-center items-center w-full">
+      {/* <div className=" flex justify-center items-center w-full">
         <Image src={banner} alt="Trendi banner"
         className="w-5/6 mx-auto"/>
-      </div>
+      </div> */}
     </div>
   )
 }

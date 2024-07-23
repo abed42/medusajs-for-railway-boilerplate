@@ -19,11 +19,11 @@ const Register = ({ setCurrentView }: Props) => {
   return (
     <div className="max-w-sm flex flex-col items-center">
       <h1 className="text-large-semi uppercase mb-6">
-        Become a Medusa Store Member
+        Become a Trendimensional Member
       </h1>
       <p className="text-center text-base-regular text-ui-fg-base mb-4">
-        Create your Medusa Store Member profile, and get access to an enhanced
-        shopping experience.
+        Create your Trendimensional profile, and get access to an enhanced
+        garment shopping experience.
       </p>
       <form className="w-full flex flex-col" action={formAction}>
         <div className="flex flex-col w-full gap-y-2">
@@ -46,7 +46,23 @@ const Register = ({ setCurrentView }: Props) => {
             type="email"
             autoComplete="email"
           />
-          <Input label="Phone" name="phone" type="tel" autoComplete="tel" />
+          <Input
+            label="Company"
+            name="company"
+            required
+            type="text"
+            autoComplete="work company"
+            pattern="[A-Za-z0-9\s]*"
+          />
+          <Input
+            label="Role"
+            name="role"
+            required
+            type="text"
+            autoComplete="Role"
+            pattern="[A-Za-z0-9\s]*"
+          />
+          {/* <Input label="Phone" name="phone" type="tel" autoComplete="tel" /> */}
           <Input
             label="Password"
             name="password"

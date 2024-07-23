@@ -58,7 +58,7 @@ const AccountNav = ({
                     </>
                   </LocalizedClientLink>
                 </li>
-                <li>
+                {/* <li>
                   <LocalizedClientLink
                     href="/account/addresses"
                     className="flex items-center justify-between py-4 border-b border-gray-200 px-8"
@@ -71,7 +71,7 @@ const AccountNav = ({
                       <ChevronDown className="transform -rotate-90" />
                     </>
                   </LocalizedClientLink>
-                </li>
+                </li> */}
                 <li>
                   <LocalizedClientLink
                     href="/account/orders"
@@ -119,11 +119,11 @@ const AccountNav = ({
                   Profile
                 </AccountNavLink>
               </li>
-              <li>
+              {/* <li>
                 <AccountNavLink href="/account/addresses" route={route!}>
                   Addresses
                 </AccountNavLink>
-              </li>
+              </li> */}
               <li>
                 <AccountNavLink href="/account/orders" route={route!}>
                   Orders

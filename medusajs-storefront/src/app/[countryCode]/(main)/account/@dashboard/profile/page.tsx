@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import ProfilePhone from "@modules/account//components/profile-phone"
+import ProfileCompany from "@modules/account//components/profile-company"
 import ProfileBillingAddress from "@modules/account/components/profile-billing-address"
 import ProfileEmail from "@modules/account/components/profile-email"
 import ProfileName from "@modules/account/components/profile-name"
@@ -8,6 +8,7 @@ import ProfilePassword from "@modules/account/components/profile-password"
 
 import { getCustomer, listRegions } from "@lib/data"
 import { notFound } from "next/navigation"
+import ProfileRole from "@modules/account/components/profile-role"
 
 export const metadata: Metadata = {
   title: "Profile",
@@ -37,7 +38,9 @@ export default async function Profile() {
         <Divider />
         <ProfileEmail customer={customer} />
         <Divider />
-        <ProfilePhone customer={customer} />
+        <ProfileCompany customer={customer} />
+        <Divider />
+        <ProfileRole customer={customer} />
         <Divider />
         <ProfilePassword customer={customer} />
         <Divider />
