@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "next dev -p 8000",
-    "build": "CI=false npm run wait && next build",
+    "build": "npm run wait && next build",
     "wait": "node script/awaitBackendReady.js",
     "start": "next start",
     "lint": "next lint",
@@ -50,6 +50,7 @@
     "react-dom": "^18.2.0",
     "react-instantsearch-hooks-web": "^6.29.0",
     "react-intersection-observer": "^9.3.4",
+    "sharp": "^0.33.4",
     "stripe": "^15.10.0",
     "swiper": "^11.1.4",
     "tailwindcss-radix": "^2.8.0",
