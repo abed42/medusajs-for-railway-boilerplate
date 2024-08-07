@@ -2,10 +2,6 @@
 
 import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
 
-import Back from "@modules/common/icons/back"
-import FastDelivery from "@modules/common/icons/fast-delivery"
-import Refresh from "@modules/common/icons/refresh"
-
 import Accordion from "./accordion"
 import Link from "next/link"
 
@@ -58,16 +54,18 @@ const ProductInfoTab = ({ product }: ProductTabsProps) => {
         <div>
           <div>
             <p className="font-semibold">MEASUREMENTS</p>
+            <p>The patterns are in a standard base size and are not graded.</p>
             <p>
-             The patterns are in a standard base size and are not graded.
-            </p>
-            <p>
-              Check the measurement charts used for our avatars {" "}
-              <Link  href="https://res.cloudinary.com/dexj5csg8/image/upload/v1721210457/Mesurements%20chart/2de8cbcd-8db8-4a0b-a2be-352829c18b72_uyrcjc.jpg" passHref legacyBehavior>
-                <a className="underline text-blue-600"target="_blank">
-                    here. 
+              Check the measurement charts used for our avatars{" "}
+              <Link
+                href="https://res.cloudinary.com/dexj5csg8/image/upload/v1721754835/Mesurements%20chart/size_chart_ja7kvo.jpg"
+                passHref
+                legacyBehavior
+              >
+                <a className="underline text-blue-600" target="_blank">
+                  here.
                 </a>
-            </Link>
+              </Link>
             </p>
           </div>
         </div>
