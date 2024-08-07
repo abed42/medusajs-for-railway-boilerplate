@@ -6,13 +6,15 @@ import { ProductCollectionWithPreviews } from "types/global"
 export default async function FeaturedProducts({
   collections,
   region,
+  showAll,
 }: {
   collections: ProductCollectionWithPreviews[]
   region: Region
+  showAll?: boolean
 }) {
   return collections.map((collection) => (
     <li key={collection.id}>
-      <ProductRail collection={collection} region={region} />
+      <ProductRail collection={collection} region={region} showAll={showAll} />
     </li>
   ))
 }
