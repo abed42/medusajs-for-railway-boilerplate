@@ -1,6 +1,5 @@
 import { CheckIcon } from "@heroicons/react/20/solid"
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm"
-import Link from "next/link"
 const tiers = [
   {
     name: "TRIAL",
@@ -126,31 +125,22 @@ export default function CreditPricing({
                   </ul>
                 </div>
               </div>
-              {tier.name === "TRIAL" ? (
-                <Link
-                  href="https://www.trendimensional.com/contact"
-                  className=" ring-1 ring-inset ring-gray-200 hover:ring-gray-400 w-full mt-6 block rounded-xl px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  REQUEST A DEMO
-                </Link>
-              ) : (
-                <button
-                  onClick={handler}
-                  aria-describedby={tier.id}
-                  disabled={tier.name === "TRIAL" ? false : true}
-                  className={classNames(
-                    tier.mostPopular
-                      ? "bg-trendi shadow-sm hover:bg-trendi text-black"
-                      : " ring-1 ring-inset ring-gray-200 hover:ring-gray-400",
-                    " w-full mt-6 block rounded-xl px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
-                    tier.name === "TRIAL"
-                      ? "cursor-pointer "
-                      : "cursor-not-allowed"
-                  )}
-                >
-                  COMING SOON
-                </button>
-              )}
+              <button
+                onClick={handler}
+                aria-describedby={tier.id}
+                disabled={tier.name === "TRIAL" ? false : true}
+                className={classNames(
+                  tier.mostPopular
+                    ? "bg-trendi shadow-sm hover:bg-trendi text-black"
+                    : " ring-1 ring-inset ring-gray-200 hover:ring-gray-400",
+                  " w-full mt-6 block rounded-xl px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+                  tier.name === "TRIAL"
+                    ? "cursor-pointer "
+                    : "cursor-not-allowed"
+                )}
+              >
+                {tier.name === "TRIAL" ? "REQUEST A DEMO" : "COMING SOON"}
+              </button>
             </div>
           ))}
         </div>
