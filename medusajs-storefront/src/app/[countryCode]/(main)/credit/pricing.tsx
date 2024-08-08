@@ -6,7 +6,7 @@ const tiers = [
     id: "tier-trial",
     href: "#",
     price: { monthly: "free", annually: "$144" },
-    description: "The essentials to provide your best work for clients.",
+    description: "",
     features: [
       "3 credits / one time",
       "Access to the full library",
@@ -19,7 +19,7 @@ const tiers = [
     id: "tier-essential",
     href: "#",
     price: { monthly: "999€", annually: "9,990€" },
-    description: "A plan that scales with your rapidly growing business.",
+    description: "",
     features: [
       "all that' included in the free plan",
       "20 credits / a month",
@@ -35,7 +35,7 @@ const tiers = [
     id: "tier-enterprise",
     href: "#",
     price: { monthly: "1499€", annually: "14,990€" },
-    description: "Dedicated support and infrastructure for your company.",
+    description: "",
     features: [
       "40 credits / a month",
       "1 garment / 37,5 €",

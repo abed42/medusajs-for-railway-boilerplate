@@ -2,6 +2,7 @@ import { getProductsListWithSort, getRegion } from "@lib/data"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+// import ProductGrid from "./ProductGrid"
 
 const PRODUCT_LIMIT = 12
 
@@ -62,7 +63,8 @@ export default async function PaginatedProducts({
 
   return (
     <>
-      <ul className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
+     {/* <ProductGrid products={products} region={region}/> */}
+     <ul className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
         {products.map((p) => {
           return (
             <li key={p.id}>
