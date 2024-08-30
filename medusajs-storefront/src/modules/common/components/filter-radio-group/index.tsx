@@ -1,6 +1,5 @@
-import { EllipseMiniSolid } from "@medusajs/icons"
-import { Label, Text, clx, Checkbox } from "@medusajs/ui"
-import { ChangeEvent, useState } from "react"
+import { Label, Text, clx } from "@medusajs/ui"
+import { ChangeEvent } from "react"
 
 type FilterCheckboxGroupProps = {
   title: string
