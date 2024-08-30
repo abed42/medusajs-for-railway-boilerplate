@@ -32,21 +32,21 @@ const FilterCheckboxGroup = ({
             "ml-[-1.75rem]": i.value === value,
           })}
         >
-          {i.value === value && <EllipseMiniSolid />}
-          <Checkbox
+          <input
+            type="checkbox"
             checked={
               filters?.includes(i.value) ||
               filters?.includes(i.value.replaceAll(" ", "-"))
             }
+            className="h-4 w-4 rounded border-gray-300 text-black focus:ring-gray-600 focus:ring-offset-gray-100"
+            id={i.value}
+            value={i.value}
             onClick={(e) =>
               handleChange(
                 e as unknown as ChangeEvent<HTMLButtonElement>,
                 i.value
               )
             }
-            className="peer"
-            id={i.value}
-            value={i.value}
           />
           <Label
             htmlFor={i.value}
