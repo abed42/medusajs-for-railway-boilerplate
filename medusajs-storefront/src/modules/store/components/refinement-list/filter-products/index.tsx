@@ -80,7 +80,7 @@ const FilterProducts = ({ filterBy, setQueryParams }: SortProductsProps) => {
   }
 
   useEffect(() => {
-    if (filters.length > 0) {
+    if (filters.length >= 0) {
       setQueryParams("filters", filters.join("_"))
     }
   }, [filters])
