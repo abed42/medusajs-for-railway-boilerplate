@@ -43,7 +43,7 @@ const SortRadioGroup = ({
               value={i.value}
             />
             <Label
-              placeholder={i.label}
+              // placeholder={i.label}
               htmlFor={i.value}
               className={clx(
                 "!txt-compact-small !transform-none text-ui-fg-subtle hover:cursor-pointer",
