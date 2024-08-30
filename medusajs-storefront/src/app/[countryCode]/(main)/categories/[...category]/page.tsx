@@ -9,6 +9,7 @@ type Props = {
   params: { category: string[]; countryCode: string }
   searchParams: {
     sortBy?: SortOptions
+    filters?: any
     page?: string
   }
 }
@@ -65,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {
-  const { sortBy, page } = searchParams
+  const { sortBy, page, filters } = searchParams
 
   const { product_categories } = await getCategoryByHandle(
     params.category
@@ -79,6 +80,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     <CategoryTemplate
       categories={product_categories}
       sortBy={sortBy}
+      filters={filters}
       page={page}
       countryCode={params.countryCode}
     />

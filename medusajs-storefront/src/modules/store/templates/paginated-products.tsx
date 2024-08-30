@@ -2,9 +2,8 @@ import { getProductsListWithSort, getRegion } from "@lib/data"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
-// import ProductGrid from "./ProductGrid"
 
-const PRODUCT_LIMIT = 12
+const PRODUCT_LIMIT = 24
 
 type PaginatedProductsParams = {
   limit: number
@@ -15,6 +14,7 @@ type PaginatedProductsParams = {
 
 export default async function PaginatedProducts({
   sortBy,
+  filters,
   page,
   collectionId,
   categoryId,
@@ -22,6 +22,7 @@ export default async function PaginatedProducts({
   countryCode,
 }: {
   sortBy?: SortOptions
+  filters?: any
   page: number
   collectionId?: string
   categoryId?: string
@@ -63,14 +64,21 @@ export default async function PaginatedProducts({
 
   return (
     <>
-     {/* <ProductGrid products={products} region={region}/> */}
-     <ul className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
+      <ul className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
         {products.map((p) => {
-          return (
-            <li key={p.id}>
-              <ProductPreview productPreview={p} region={region} isFeatured />
-            </li>
-          )
+          if (
+            !filters ||
+            p.tags?.some((tag) => filters.split("_").includes(tag.value)) ||
+            p.tags?.some((tag) =>
+              filters.split("_").includes(tag.value.replaceAll(" ", "-"))
+            )
+          ) {
+            return (
+              <li key={p.id}>
+                <ProductPreview productPreview={p} region={region} isFeatured />
+              </li>
+            )
+          }
         })}
       </ul>
       {totalPages > 1 && <Pagination page={page} totalPages={totalPages} />}

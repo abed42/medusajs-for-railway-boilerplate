@@ -5,6 +5,7 @@ import { getPercentageDiff } from "@lib/util/get-precentage-diff"
 import { formatAmount } from "@lib/util/prices"
 import { ProductPreviewType } from "types/global"
 import { CalculatedVariant } from "types/medusa"
+import { ProductTag } from "@medusajs/product"
 
 const transformProductPreview = (
   product: PricedProduct,
@@ -29,6 +30,7 @@ const transformProductPreview = (
     handle: product.handle!,
     thumbnail: product.thumbnail!,
     created_at: product.created_at,
+    tags: product.tags as ProductTag[] | undefined,
     price: cheapestVariant
       ? {
           calculated_price: formatAmount({

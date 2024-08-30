@@ -1,9 +1,9 @@
 {
-  "name": "medusa-next",
+  "name": "trendimensional-platform",
   "version": "1.0.3",
   "private": true,
-  "author": "Kasper Fabricius Kristensen <kasper@medusajs.com> & Victor Gerbrands <victor@medusajs.com> (https://www.medusajs.com)",
-  "description": "Next.js Starter to be used with Medusa server",
+  "author": "Abed Hamami",
+  "description": "Trendimensional Digital Garment Platform.",
   "keywords": [
     "medusa-storefront"
   ],
@@ -62,6 +62,7 @@
     "@medusajs/medusa": "^1.18.0",
     "@medusajs/ui-preset": "^1.0.2",
     "@types/lodash": "^4.14.195",
+    "@types/next": "^9.0.0",
     "@types/node": "17.0.21",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.18",

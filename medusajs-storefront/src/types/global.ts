@@ -1,6 +1,6 @@
 import { Cart, ProductCategory, ProductVariant, Region } from "@medusajs/medusa"
 import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
-import { ProductCollection } from "@medusajs/product"
+import { ProductCollection, ProductTag } from "@medusajs/product"
 
 export type FeaturedProduct = {
   id: string
@@ -15,6 +15,7 @@ export type ProductPreviewType = {
   handle: string | null
   thumbnail: string | null
   created_at?: Date
+  tags?: ProductTag[]
   price?: {
     calculated_price: string
     original_price: string
