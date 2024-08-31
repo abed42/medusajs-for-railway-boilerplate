@@ -8,9 +8,8 @@ import { ProductCollectionWithPreviews } from "types/global"
 import { cache } from "react"
 
 export const metadata: Metadata = {
-  title: "Medusa Next.js Starter Template",
-  description:
-  "The first virtual prototypes library powered by AI.",
+  title: "Trendimensional",
+  description: "Library of high quality digital garments.",
 }
 
 const getCollectionsWithProducts = cache(

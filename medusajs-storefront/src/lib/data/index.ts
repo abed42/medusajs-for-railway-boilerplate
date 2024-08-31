@@ -104,7 +104,7 @@ export async function spendCredits(amount: any): Promise<boolean> {
       },
       body: JSON.stringify({
           id: customer.id,
-          credit: 10
+          credit: 1
       }),
     });
     console.log("Credits are being used successfully");

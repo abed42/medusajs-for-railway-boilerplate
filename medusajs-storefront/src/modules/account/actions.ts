@@ -54,6 +54,9 @@ export async function logCustomerIn(
     })
   } catch (error: any) {
     return error.toString()
+  } finally {
+    const countryCode = headers().get("next-url")?.split("/")[1] || ""
+    redirect(`/${countryCode}/`)
   }
 }
 
