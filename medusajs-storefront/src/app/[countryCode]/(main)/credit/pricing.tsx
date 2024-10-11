@@ -1,5 +1,6 @@
 import { CheckIcon } from "@heroicons/react/20/solid"
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm"
+import Link from "next/link"
 const tiers = [
   {
     name: "TRIAL",
@@ -69,7 +70,7 @@ export default function CreditPricing({
           </p>
         </div>
         <p className=" uppercase mx-auto mt-6 mb-20 max-w-2xl text-center text-2xl leading-8 text-gray-600 sm:text-2xl">
-          Pricing plan that matches your needs.
+          Pricing plans that match your needs.
         </p>
 
         <div className=" isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -125,22 +126,31 @@ export default function CreditPricing({
                   </ul>
                 </div>
               </div>
-              <button
-                onClick={handler}
-                aria-describedby={tier.id}
-                disabled={tier.name === "TRIAL" ? false : true}
-                className={classNames(
-                  tier.mostPopular
-                    ? "bg-trendi shadow-sm hover:bg-trendi text-black"
-                    : " ring-1 ring-inset ring-gray-200 hover:ring-gray-400",
-                  " w-full mt-6 block rounded-xl px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
-                  tier.name === "TRIAL"
-                    ? "cursor-pointer "
-                    : "cursor-not-allowed"
-                )}
-              >
-                {tier.name === "TRIAL" ? "REQUEST A DEMO" : "COMING SOON"}
-              </button>
+              {tier.name === "TRIAL" ? (
+                <Link
+                  href="https://www.trendimensional.com/contact"
+                  className=" ring-1 ring-inset ring-gray-200 hover:ring-gray-400 w-full mt-6 block rounded-xl px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  REQUEST A DEMO
+                </Link>
+              ) : (
+                <button
+                  onClick={handler}
+                  aria-describedby={tier.id}
+                  disabled={tier.name === "TRIAL" ? false : true}
+                  className={classNames(
+                    tier.mostPopular
+                      ? "bg-trendi shadow-sm hover:bg-trendi text-black"
+                      : " ring-1 ring-inset ring-gray-200 hover:ring-gray-400",
+                    " w-full mt-6 block rounded-xl px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+                    tier.name === "TRIAL"
+                      ? "cursor-pointer "
+                      : "cursor-not-allowed"
+                  )}
+                >
+                  COMING SOON
+                </button>
+              )}
             </div>
           ))}
         </div>
